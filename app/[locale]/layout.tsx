@@ -1,0 +1,2 @@
+import Header from '@/components/Header';import Footer from '@/components/Footer';
+export default async function LocaleLayout({children,params}:{children:React.ReactNode,params:Promise<{locale:string}>}){const {locale}=await params;const l=locale==='en'?'en':'ar';return <div lang={l} className={`${l==='ar'?'rtl ar':'ltr'}`}><Header locale={l}/>{children}<Footer/></div>}
