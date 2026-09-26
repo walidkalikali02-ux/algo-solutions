@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="t d">
+<title id="t">Doha Roastery Project Cover</title>
+<desc id="d">Minimal editorial project cover for Doha Roastery e-commerce and operations project.</desc>
+<rect width="1600" height="1000" fill="#efe7dc"/>
+<rect x="72" y="72" width="1456" height="856" rx="38" fill="#151515"/>
+<text x="130" y="180" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#f5efe8">DOHA ROASTERY</text>
+<text x="130" y="232" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#b8b0a7">E-COMMERCE · ORDERING · OPERATIONS</text>
+
+<g transform="translate(970 155)">
+  <circle cx="220" cy="240" r="210" fill="#d5bf9c"/>
+  <circle cx="220" cy="240" r="145" fill="#efe7dc"/>
+  <path d="M152 255c18-76 115-112 170-48 41 48 7 132-56 140-66 9-130-27-114-92z" fill="#8a5a3b"/>
+  <path d="M219 147c-6 70 19 133 70 181" fill="none" stroke="#efe7dc" stroke-width="14" stroke-linecap="round"/>
+</g>
+
+<g transform="translate(130 330)">
+  <rect x="0" y="0" width="360" height="470" rx="24" fill="#f7f1e9"/>
+  <rect x="42" y="52" width="276" height="96" rx="10" fill="#d8c6b0"/>
+  <text x="66" y="112" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#222">BRAZIL</text>
+  <text x="66" y="145" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#645d56">CHOCOLATE · CARAMEL · NUTS</text>
+  <path d="M58 206h244v164H58z" fill="#ece3d8"/>
+  <circle cx="180" cy="288" r="58" fill="#b77d54"/>
+  <path d="M180 235c-10 34-5 73 14 105" fill="none" stroke="#ece3d8" stroke-width="10" stroke-linecap="round"/>
+  <rect x="58" y="396" width="118" height="20" rx="10" fill="#222"/>
+  <rect x="58" y="432" width="184" height="12" rx="6" fill="#b9b1a8"/>
+</g>
+
+<g transform="translate(540 378)">
+  <rect x="0" y="0" width="355" height="390" rx="26" fill="#262626"/>
+  <rect x="32" y="34" width="291" height="52" rx="12" fill="#343434"/>
+  <circle cx="64" cy="60" r="8" fill="#d5bf9c"/>
+  <rect x="93" y="52" width="108" height="15" rx="8" fill="#777"/>
+  <rect x="32" y="112" width="138" height="112" rx="18" fill="#333"/>
+  <rect x="185" y="112" width="138" height="112" rx="18" fill="#333"/>
+  <text x="53" y="156" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#aaa">ORDERS</text>
+  <text x="53" y="195" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#fff">1,284</text>
+  <text x="206" y="156" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#aaa">GROWTH</text>
+  <text x="206" y="195" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#d5bf9c">+32%</text>
+  <rect x="32" y="244" width="291" height="110" rx="18" fill="#303030"/>
+  <path d="M55 325 C110 288, 130 318, 175 280 S245 266, 300 226" fill="none" stroke="#d5bf9c" stroke-width="8" stroke-linecap="round"/>
+</g>
+
+<text x="130" y="875" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#b8b0a7">Selected work by Algo Solutions · Doha, Qatar</text>
+</svg>
