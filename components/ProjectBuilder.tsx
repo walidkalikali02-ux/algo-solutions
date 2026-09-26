@@ -37,6 +37,8 @@ export default function ProjectBuilder({locale}:{locale:Locale}){
   },[service]);
 
   const upd=(k:string,v:string)=>setDetails({...details,[k]:v});
+  const goalLabel=goals.find(x=>x.id===goal);
+  const serviceLabel=services.find(x=>x.id===service);
 
   return <div className="formWrap">
     <div className="progress"><div style={{width:`${step/total*100}%`}}/></div>
@@ -107,8 +109,8 @@ export default function ProjectBuilder({locale}:{locale:Locale}){
 
       <div className="summaryCard">
         <div className="mini">{ar?'ملخص سريع':'Quick summary'}</div>
-        <p><b>{ar?'الهدف':'Goal'}:</b> {goal}<br/>
-        <b>{ar?'الحل':'Solution'}:</b> {service|| (ar?'غير محدد':'Not decided')}
+        <p><b>{ar?'الهدف':'Goal'}:</b> {goalLabel?(ar?goalLabel.ar:goalLabel.en):(ar?'غير محدد':'Not decided')}<br/>
+        <b>{ar?'الحل':'Solution'}:</b> {serviceLabel?(ar?serviceLabel.ar:serviceLabel.en):(ar?'غير محدد':'Not decided')}
         {details.type?<> — {details.type}</>:null}<br/>
         {details.budget?details.budget:(ar?'الميزانية غير محددة':'Budget not decided')} • {details.timeline?details.timeline:(ar?'الموعد مرن':'Flexible timeline')}</p>
       </div>
