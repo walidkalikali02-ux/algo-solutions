@@ -1,0 +1,3 @@
+import Link from 'next/link';
+import {copy} from '@/lib/content';
+export default function Header({locale}:{locale:'ar'|'en'}){const t=copy[locale];const alt=locale==='ar'?'en':'ar';return <header className="nav"><div className="container navin"><Link className="brand" href={`/${locale}`}>ALGO SOLUTIONS</Link><nav className="links"><Link href={`/${locale}/services`}>{t.nav.services}</Link><Link href={`/${locale}/work`}>{t.nav.work}</Link><Link href={`/${locale}/solutions`}>{t.nav.solutions}</Link><Link href={`/${locale}/pricing`}>{t.nav.pricing}</Link><Link className="lang" href={`/${alt}`}>{alt.toUpperCase()}</Link><Link className="btn primary" href={`/${locale}/start-project`}>{t.nav.start}</Link></nav></div></header>}
