@@ -1,1 +1,2 @@
-export default function Footer(){return <footer className="footer"><div className="container">© 2026 Algo Solutions — Websites • Systems • E-Commerce • Social Media</div></footer>}
+import Link from 'next/link';
+export default function Footer(){return <footer className="footer"><div className="container footerInner"><div>© 2026 Algo Solutions</div><div className="footerLinks"><Link href="/ar/services">الخدمات</Link><Link href="/ar/work">الأعمال</Link><Link href="/ar/pricing">الأسعار</Link><Link href="/ar/start-project">ابدأ مشروعك</Link></div></div></footer>}
