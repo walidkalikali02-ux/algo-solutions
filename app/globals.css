@@ -88,3 +88,12 @@ a{color:inherit}
 .sectionAction{display:flex;justify-content:center;margin-top:28px}
 .section.dark .processStep{border-color:#3a3b36}.section.dark .processStep b{color:#b9c5ab}.section.dark .processStep p{color:#b9b9b4}
 @media(max-width:900px){.goalGrid{grid-template-columns:1fr}.goalCard{min-height:220px}}
+
+.projectCardImage{min-height:610px}
+.workGridImages{grid-template-columns:1.2fr .8fr}
+.projectImage{position:absolute;left:24px;right:24px;bottom:24px;height:330px;border-radius:18px;overflow:hidden;background:#e8e3db;border:1px solid var(--line)}
+.projectImage img{object-fit:cover;transition:transform .45s ease}
+.projectCardImage:hover .projectImage img,.projectWithImage:hover .projectImage img{transform:scale(1.025)}
+.projectWithImage{min-height:570px;position:relative}
+.projectImagePage{position:relative;left:auto;right:auto;bottom:auto;height:330px;margin-top:24px}
+@media(max-width:900px){.workGridImages{grid-template-columns:1fr}.projectCardImage{min-height:560px}.projectImage{height:300px}}
