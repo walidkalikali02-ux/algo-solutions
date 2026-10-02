@@ -15,6 +15,12 @@ const { PGlite } = require(root + "/node_modules/@electric-sql/pglite");
       "utf8",
     ),
   );
+  await pg.exec(
+    fs.readFileSync(
+      root + "/supabase/migrations/20261002180000_google_maps.sql",
+      "utf8",
+    ),
+  );
   const server = createServer(async (req, res) => {
     try {
       let data = "";
@@ -38,6 +44,44 @@ const { PGlite } = require(root + "/node_modules/@electric-sql/pglite");
             ],
           )
         ).rows[0].data;
+      } else if (req.url.startsWith("/rest/v1/sales_maps_prospects")) {
+        if (req.method === "GET")
+          output = (
+            await pg.query(
+              "select row_to_json(p) as data from sales_maps_prospects p order by created_at desc",
+            )
+          ).rows.map((r) => r.data);
+        else if (req.method === "POST") {
+          const p = JSON.parse(data);
+          output = (
+            await pg.query(
+              "insert into sales_maps_prospects(place_id,service,notes,status,next_action_at,updated_at) values($1,$2,$3,$4,$5,$6) on conflict(place_id) do nothing returning row_to_json(sales_maps_prospects) as data",
+              [
+                p.place_id,
+                p.service,
+                p.notes,
+                p.status,
+                p.next_action_at,
+                p.updated_at,
+              ],
+            )
+          ).rows.map((r) => r.data);
+        } else if (req.method === "PATCH") {
+          const p = JSON.parse(data);
+          output = (
+            await pg.query(
+              "update sales_maps_prospects set service=$2,notes=$3,status=$4,next_action_at=$5,updated_at=$6 where place_id=$1 returning row_to_json(sales_maps_prospects) as data",
+              [
+                p.place_id,
+                p.service,
+                p.notes,
+                p.status,
+                p.next_action_at,
+                p.updated_at,
+              ],
+            )
+          ).rows.map((r) => r.data);
+        } else throw Error("unexpected maps method");
       } else if (req.method === "GET") {
         output = (
           await pg.query(
@@ -164,6 +208,106 @@ const { PGlite } = require(root + "/node_modules/@electric-sql/pglite");
       await request("/ar/sales", "GET", null, cookie)
     ).text();
     assert.ok(privatePage.includes("Private Example"));
+    assert.equal(
+      (
+        await request("/api/sales/maps/search", "POST", {
+          sector: "Clinics",
+          city: "doha",
+        })
+      ).status,
+      403,
+    );
+    const mapsPage = await (
+      await request("/ar/sales/maps", "GET", null, cookie)
+    ).text();
+    assert.ok(mapsPage.includes("البحث عن شركات"));
+    assert.ok(mapsPage.includes("اتصال Google Maps لم يُجهز بعد"));
+    assert.equal(
+      (
+        await request(
+          "/api/sales/maps/search",
+          "POST",
+          { sector: "Clinics", city: "doha" },
+          cookie,
+        )
+      ).status,
+      503,
+    );
+    assert.equal(
+      (
+        await request(
+          "/api/sales/maps/search",
+          "POST",
+          { sector: "Clinics", city: "invalid" },
+          cookie,
+        )
+      ).status,
+      400,
+    );
+    assert.equal(
+      (
+        await request(
+          "/api/sales/maps/details",
+          "POST",
+          { placeId: "bad" },
+          cookie,
+        )
+      ).status,
+      400,
+    );
+    assert.ok((await (await request("/ar/privacy")).text()).includes("Google"));
+    assert.ok(
+      (await (await request("/ar/terms")).text()).includes("Google Maps"),
+    );
+    const prospect = {
+      placeId: "ChIJ_Test_Place_123",
+      service: "website",
+      notes: "Research business requirements",
+      status: "new",
+      nextActionAt: null,
+      company: "Do not persist provider data",
+      phone: "+97412345678",
+    };
+    assert.equal(
+      (await request("/api/sales/maps/prospects", "POST", prospect)).status,
+      403,
+    );
+    assert.equal(
+      (await request("/api/sales/maps/prospects", "POST", prospect, cookie))
+        .status,
+      201,
+    );
+    const duplicate = await request(
+      "/api/sales/maps/prospects",
+      "POST",
+      { ...prospect, notes: "Overwrite" },
+      cookie,
+    );
+    assert.equal(duplicate.status, 200);
+    assert.equal((await duplicate.json()).duplicate, true);
+    const mapsStored = (
+      await pg.query(
+        "select row_to_json(p) as data from sales_maps_prospects p",
+      )
+    ).rows[0].data;
+    assert.equal(mapsStored.notes, prospect.notes);
+    assert.equal(mapsStored.phone, undefined);
+    assert.equal(mapsStored.company, undefined);
+    assert.equal(
+      (
+        await request(
+          "/api/sales/maps/prospects",
+          "PATCH",
+          {
+            ...prospect,
+            status: "reviewing",
+            notes: "Confirm the project scope",
+          },
+          cookie,
+        )
+      ).status,
+      200,
+    );
     const update = {
       stage: "won",
       value: 5000,

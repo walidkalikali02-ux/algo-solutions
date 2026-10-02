@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import {
   Lead,
   Stage,
@@ -99,6 +100,12 @@ export default function SalesDashboard({
       <div className="salesHead">
         <h1>{ar ? "المبيعات" : "Sales"}</h1>
         <div className="actions">
+          <Link
+            className="btn primary"
+            href={`/${ar ? "ar" : "en"}/sales/maps`}
+          >
+            {ar ? "البحث عن شركات" : "Find businesses"}
+          </Link>
           <button className="btn" onClick={() => location.reload()}>
             {ar ? "تحديث" : "Refresh"}
           </button>

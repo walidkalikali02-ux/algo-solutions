@@ -37,3 +37,17 @@ There are no imported customers, communications or fabricated sales. Existing le
 `npm run build`, `npx tsc --noEmit`, `npm test`, `npm run test:integration`.
 
 Integration tests run the actual Next.js production server against a temporary PostgreSQL database with a local PostgREST adapter. They verify HTTP and persistence behavior, not browser interactions or the production Supabase connection.
+
+## Google Maps prospect research
+
+`/ar/sales/maps` and `/en/sales/maps` add protected sector/city research through Google Places API (New), with ten results per search page, signed pagination cursors, fresh listing details and saved follow-up references. A missing website field is a research hint, not proof that a company lacks a website or needs a service. Closed businesses are flagged. No messaging is sent.
+
+Apply **both** SQL migrations in order. Configure server-only `GOOGLE_PLACES_API_KEY` from a Google Cloud project with billing and Places API (New) enabled. Restrict the key to Places API and set Cloud quotas. The app defaults to 50 combined search/detail calls per UTC day across administrators; `GOOGLE_PLACES_DAILY_LIMIT` can be 1–500. The database reserves usage atomically before each Google request. Failed upstream requests also consume the app limit. Google billing depends on requested fields; phone and website fields use the Enterprise field tier. No paid Google requests were made during implementation/testing.
+
+Google results are displayed live with attribution and are not written to the database, exported, or stored in browser storage. Only Place IDs and user-authored workflow metadata are durable in `sales_maps_prospects`. Saving an already saved ID does not overwrite notes; update explicitly. Prospect records are separate from confirmed inbound project requests and do not fabricate contact people, budgets or buying interest. The saved list covers the latest 500 references and flags truncation. Listing details are refreshed explicitly when opening a saved reference.
+
+Public `/ar/terms`, `/en/terms`, `/ar/privacy`, and `/en/privacy` include the Google notices. Review them for your operating business before launching. References:
+- https://developers.google.com/maps/documentation/places/web-service/text-search
+- https://developers.google.com/maps/documentation/places/web-service/place-details
+- https://developers.google.com/maps/documentation/places/web-service/policies
+- https://developers.google.com/maps/documentation/places/web-service/get-api-key
